@@ -61,7 +61,7 @@ int pwm = 0;
         case 30:
             pwm = 1 - pwm;
             printk("pwm %d",pwm);
-            gpio_direction_output(RPI_GPIO_OUT);
+            gpio_direction_output(RPI_GPIO_OUT, pwm);
             break;
 
         case 31:
@@ -109,7 +109,7 @@ int pwm = 0;
                     if(cmd == RPI_GPIO_OUT)
                         pwm = 0;
                     printk(KERN_INFO "Switching the GPIO port %d off...\n", cmd);
-                    gpio_direction_output(cmd);
+                    gpio_direction_output(cmd, 0);
                     gpio_set_value(cmd, 0);
                     break;
 
@@ -117,7 +117,7 @@ int pwm = 0;
                     if(cmd == RPI_GPIO_OUT)
                         pwm = 0;
                     printk(KERN_INFO "Switching the GPIO port %d on...\n", cmd);
-                    gpio_direction_output(cmd);
+                    gpio_direction_output(cmd, 1);
                     gpio_set_value(cmd, 1);
                     break;
 
@@ -146,7 +146,7 @@ int pwm = 0;
             for (i = FIRST_GPIO_PORT; i <= LAST_GPIO_PORT; i++){
                 if(i == RPI_GPIO_OUT)
                    pwm = 0;
-                gpio_direction_output(cmd);
+                gpio_direction_output(cmd, 0);
                 gpio_set_value(i, 0);
             }
             break;
@@ -156,7 +156,7 @@ int pwm = 0;
             for (i = FIRST_GPIO_PORT; i <= LAST_GPIO_PORT; i++){
                 if(i == RPI_GPIO_OUT)
                    pwm = 0;
-                gpio_direction_output(cmd);
+                gpio_direction_output(cmd, 1);
                 gpio_set_value(i, 1);
             }
             break;
