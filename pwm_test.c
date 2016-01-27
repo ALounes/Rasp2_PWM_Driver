@@ -11,8 +11,8 @@
 #define GPIO_PWM_MAJOR 18
 
 // First and last GPIO port numbers for the Raspberry Pi 2
-#define FIRST_GPIO_PORT 2
-#define LAST_GPIO_PORT 27
+#define FIRST_GPIO_PORT 18
+#define LAST_GPIO_PORT 18
 #define RPI_GPIO_OUT 18
 
 /* Functions which are called when an user accesses or exits the character device. 
@@ -205,10 +205,10 @@ static void duty_function (unsigned long unused)
 static int gpio_pwm_init(void) {
     int i;
     printk(KERN_ALERT "Initializing the kernel module for GPIO and PWM ports...\n");
-    register_chrdev(GPIO_PWM_MAJOR, "gpio_pwm_module", &fops);
+    register_chrdev(GPIO_PWM_MAJOR, "pwm_module", &fops);
 
     for (i = FIRST_GPIO_PORT; i <= LAST_GPIO_PORT; i++)
-        gpio_direction_output(i,1);
+        gpio_direction_output(i,0);
 
     init_timer(& timer_period);
     timer_period.function = period_function;
